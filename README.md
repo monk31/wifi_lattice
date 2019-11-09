@@ -7,6 +7,7 @@
 ## this project allow the FPGA MACHX02 to connect to my Wifi network and programming jed
 
 programming language : micropython for his clean syntax
+
 i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
 
   
