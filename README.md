@@ -18,7 +18,7 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
   pin (SN)        →  GPIO  (pin 15 esp32)         
   pin (SISPI)     →  GPIO  (pin 13 esp32) 
   
-  -esp32_jtag
+  - esp32_jtag
   
   Pin (TCK)       →  GPIO  (pin 18 esp32)    
   Pin (TDO)       →  GPIO  (pin 19 esp32)    
@@ -34,7 +34,7 @@ to know the adress ip local use a command
 
 - nmap -sP 192.168.4.*
 
-after set the command netcat 192.168.4.<x> 241 < demo.jed 
+after set the command netcat 192.168.4.x  241 < demo.jed 
   
   
   
