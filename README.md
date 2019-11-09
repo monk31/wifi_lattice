@@ -6,6 +6,7 @@
 
 ## this project allow the FPGA MACHX02 to connect to my Wifi network and programming jed
 
+programming language : micropython for his clean syntax
 i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
 
   
@@ -25,9 +26,9 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
   pin (TDI)       →  GPIO  (pin 23 esp32)         
   pin (TMS)       →  GPIO  (pin 21 esp32) 
   
-  CAUTION : if you are a fpga machx02 256 until 2000, you can use esp32 wroom-32 
+  CAUTION : if you are a fpga machx02 256 until 2000, you must use esp32 wroom-32 
             else use esp32 wrover with spi ram
- 
+
 usage 
 
 to know the adress ip local use a command
