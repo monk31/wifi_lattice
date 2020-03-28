@@ -2,26 +2,30 @@
 """
 Created on Sun Aug 11 09:55:11 2019
 
-@author: yann brengel <ybrengel@gmail.com>
+@author: yann brengel
 """
 from const import *
-from machine import Pin
+from machine import Pin,SPI
 import utime
 
 
-# use GPIO esp32 matrix 
-
+# to manage jtag with SPI in mode bitbang
 class jtag(object):
    def __init__(self,frequency):
       self.tck = Pin(18, Pin.OUT)
       self.tdi = Pin(23, Pin.OUT)
       self.tdo = Pin(19, Pin.IN)
       self.tms = Pin(21, Pin.OUT)
+      self.spi_jtag_on(frequency)
       self.tck.off()
       self.tms.on()       
       self.tdi.on()
       self.frequency = frequency
 
+   # setting bitbang mode
+   def spi_jtag_on(self,frequency):
+      self.hwspi=SPI(-1 , baudrate=frequency, polarity=1, phase=1, bits=8, firstbit=SPI.MSB, sck=self.tck, mosi=self.tdi, miso=self.tdo)
+      self.swspi=SPI(-1 , baudrate=frequency, polarity=1, phase=1, bits=8, firstbit=SPI.MSB, sck=self.tck, mosi=self.tdi, miso=self.tdo)
 
    ##----------------------------------------------------------------------------------# 
    #pulse_tck 
@@ -42,8 +46,6 @@ class jtag(object):
    # This routine places the JTAG state machine on the target system in 
    # the Test Logic Reset state by strobing TCK 5 times while leaving 
    # tms high.  Leaves the JTAG state machine in the Run_Test/Idle state. # 
-   # def jtag_reset (self): 
- 
    def jtag_reset (self): 
       #print("reset jtag with TCK")
       self.tms.on()
@@ -51,7 +53,7 @@ class jtag(object):
          self.pulse_tck()        
       self.tms.off()
       self.pulse_tck()
-   
+
    ##--------------------------------------------------------------------# 
    #  write_dr 
    #---------------------------------------------------------------------# 

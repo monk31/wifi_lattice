@@ -2,7 +2,7 @@
 """
 Created on Mon Jun 10 15:20:37 2019
 
-@author: yann brengel
+@author: yann brengel <ybrengel@gmail.com>
 """
 import re
 import utime
@@ -10,9 +10,6 @@ from const import *
 from jtag import jtag
 
 #   class to manage MACHX02 jtag
-#
-# 
-#   
 class machx02_jtag(jtag):
     # bit16 : protection fuse ?
     # bit13:failed, bit12:busy, bit9:enabled , bit8:Flash or SRAM Done flag 
@@ -29,25 +26,45 @@ class machx02_jtag(jtag):
     status={"failed":8192,"busy":4096,"enabled":512,"done":256,"security":8192}
     IDCODE_LEN = 32
     OPCODE_LEN = 8
-    FREQUENCY = 10000
+    FREQUENCY = 400000
     
-    def __init__(self,device):
+    def __init__(self):
         jtag.__init__(self,self.FREQUENCY)
-        self.device=device        
+        self.device = None
+        self.fusetable = None
         
-
-    def prog_bscan_register(self):
-        ### program bscan register
+    # program bscan register
+    def prog_bscan_register(self):        
         self.write_ir(JTAG_CMD_SAMPLE,self.OPCODE_LEN)
-        if self.device == MACHXO2_DEVICE_ID_1200:
-           self.write_dr(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,JTAG_BSC_LENGTH_1200)
+        if self.device == MACHXO2_DEVICE_ID_1200:            
+           self.write_dr(bytearray([0xFF for i in range(int(JTAG_BSC_LENGTH_1200/8))]),JTAG_BSC_LENGTH_1200)
+        elif self.device == MACHXO2_DEVICE_ID_2000:           
+           self.write_dr(bytearray([0xFF for i in range(int(JTAG_BSC_LENGTH_2000/8))]),JTAG_BSC_LENGTH_2000)
         elif self.device == MACHXO2_DEVICE_ID_4000:           
-            self.write_dr(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,JTAG_BSC_LENGTH_4000)
+           self.write_dr(bytearray([0xFF for i in range(int(JTAG_BSC_LENGTH_4000/8))]),JTAG_BSC_LENGTH_4000)
+        elif self.device == MACHXO2_DEVICE_ID_7000:           
+           self.write_dr(bytearray([0xFF for i in range(int(JTAG_BSC_LENGTH_7000/8))]),JTAG_BSC_LENGTH_7000)
            
         self.runtest(1000,"ms",2)
     
-    def check_key_prot(self):
-        # check the Key Protection fuses
+    # asessor
+    def get_device(self,device):        
+        if device == "MACHX02_DEVICE_ID_1200":
+           self.device = MACHXO2_DEVICE_ID_1200
+        elif device == "MACHX02_DEVICE_ID_2000":
+           self.device = MACHXO2_DEVICE_ID_2000
+        elif device == "MACHX02_DEVICE_ID_4000":
+           self.device = MACHXO2_DEVICE_ID_4000
+        elif device == "MACHX02_DEVICE_ID_7000":
+           self.device = MACHXO2_DEVICE_ID_7000
+        return self.device
+     # asessor
+    def get_fusetable(self,fusetable):
+        return self.fusetable
+
+
+	# check the Key Protection fuses
+    def check_key_prot(self):        
         self.write_ir(MACHXO2_CMD_READ_STATUS,self.OPCODE_LEN)
         self.runtest(1000,"us",2)
         status = self.check_dr(0x00000000,32)
@@ -122,25 +139,19 @@ class machx02_jtag(jtag):
 
 
     def check_status(self):
-         # LSC_CHECK_STATUS        
+        # LSC_CHECK_STATUS        
         while True:
             self.write_ir(MACHXO2_CMD_READ_STATUS,self.OPCODE_LEN)          
             self.runtest(1000,"us",2)
             status = self.check_dr(0x00000000, 32)
-            print ("status ",hex(status))
+            # print ("status ",hex(status))
             if (status & self.status["busy"]  == self.status["busy"]):
-               print("busy")
+               print("erase in progress")
                utime.sleep_ms(1000)   # datasheet = 200 us
             else:
                break
-    # read status bit ?
-    
-        # ### read the status bit
-        # # LSC_READ_STATUS
-        # self.write_ir(MACHXO2_CMD_READ_STATUS,self.OPCODE_LEN)
-        # self.runtest(1000)
-        # status = self.check_dr(0x00000000,32)
-        #                                  # self.status["busy"] 
+   
+
     def check_busy_flag(self):
          # LSC_CHECK_BUSY        
         loop =10
@@ -149,9 +160,9 @@ class machx02_jtag(jtag):
             self.runtest(1000,"us",2)
             loop = loop-1
             status_busy = self.check_dr(0, 1)
-            print ("status busy",status_busy)
+            # print ("status busy",status_busy)
             if (status_busy == 1):
-               print("busy")
+               print("program in progress")
                utime.sleep_us(200)
             else:
                break
@@ -168,6 +179,34 @@ class machx02_jtag(jtag):
         read_feabits = self.check_dr(0xFFFF,16)
         return read_feature,read_feabits
 
+
+    def programm_done_bit(self):
+	    ### programm done bit
+        self.write_ir(MACHXO2_CMD_PROGRAM_DONE,self.OPCODE_LEN)
+        self.runtest(1000,"us",2)
+        status = self.check_dr(0x00, 8)
+        mask = 0xC4
+        done = (mask & status)
+        print ("program done")
+		
+    def exit_program(self):
+	 ### exit programming mode
+        # ISC DISABLE
+        self.write_ir(MACHXO2_CMD_DISABLE,self.OPCODE_LEN)
+        self.runtest(1000,"ms",2)
+        # ISC BYPASS
+        self.write_ir(JTAG_CMD_BYPASS,self.OPCODE_LEN)
+        self.runtest(100,"ms",2)
+		
+		
+    def verify_sram(self):
+        ### verify sram done bit A voir dans datasheet
+        self.runtest(5000,"ms",2)
+        # LSC_READ_STATUS
+        self.write_ir( MACHXO2_CMD_READ_STATUS,self.OPCODE_LEN)
+        status = self.check_dr(0x0000000,32)
+        mask = 0x00002100
+        return (status & mask)	
 
      # disable 
     def disable(self):
@@ -198,8 +237,7 @@ class machx02_jtag(jtag):
 
   
     # parameters : time + number of clocks
-    def runtest(self,time,unit,nb_clock):        
-        #self.reset_jtag()
+    def runtest(self,time,unit,nb_clock):       
         if unit == "us":
            utime.sleep_us(time)
         elif unit == "ms":
@@ -251,7 +289,7 @@ class machx02_jtag(jtag):
 
 
 
-
+    # todo
     def programm_feature_rows(self):
         ### program feature rows
         # LSC_INIT_ADDRESS
@@ -274,65 +312,37 @@ class machx02_jtag(jtag):
 
     def shift_bits(self,line):
         retval = ""        
-        line_strip = line.strip()
-        size_line = len(line_strip)       
+        size_line = len(line)       
         for countbit_128 in range(size_line):   
-            valbit = line_strip[127-countbit_128]
+            valbit = line[127-countbit_128]
             retval = retval + valbit
-        return retval
-
-    def compute_crc(self,line,crc):
-        line_strip = line.strip()
-        size_line = len(line_strip)
-        countline = countline + 1
-        for countbit_128 in range(size_line):
-            valbit = line_strip[countbit_128]
-            if valbit == "1":           
-               val = 1
-            else:
-               val = 0
-            crc += val << (numbit % 8)
-        return crc            
+        return retval          
 
     #####################################
     # programm jedec file
     #####################################
-    def program(self, fusetable):            
-        print("programm jed")   
+    def program_machx02(self,fusetable):                    
         ### program config flash
         # LSC_INIT_ADDRESS
         self.write_ir(MACHXO2_CMD_INIT_ADDRESS,self.OPCODE_LEN)
         self.write_dr(8, 0x04)
         self.runtest(1000,"us",2)
-       
-        #cfg_data = jed_file.get_cfg_data()
-        # print(cfg_data)
-        first_line = True
+         
         crc = 0
+        numbit=0
         for line in fusetable:
-            # LSC_PROG_INCR_NV
-            if not first_line:
-                line_shift = self.shift_bits(line)
-                crc = self.compute_crc(line,crc)
-                data = int(line_shift, 2)
-                value = hex(data)
-                self.write_ir(MACHXO2_CMD_PROG_INCR_NV,self.OPCODE_LEN)            
-                #print("line=",value)
-                self.write_dr(data,128)
-                self.runtest(1000,"us",2)
-                self.check_busy_flag()
-            first_line = False
+            line_strip = line.strip()
+            size_line = len(line_strip)   
+            # LSC_PROG_INCR_NV            
+            line_shift = self.shift_bits(line_strip)
+            for countbit_128 in range(size_line):
+                valbit = line_strip[countbit_128]              
+                crc += int(valbit) << (numbit % 8)
+                numbit=numbit+1           
+            data = int(line_shift, 2)           
+            self.write_ir(MACHXO2_CMD_PROG_INCR_NV,self.OPCODE_LEN)                      
+            self.write_dr(data,128)
+            self.runtest(1000,"us",2)
+            self.check_busy_flag()            
+        
         return crc
-            # check busy      
-        # test if ufm must be programmed   
-        # if jed_file.ufm_data is not None:
-        #     ### program user flash
-        #     # LSC_INIT_ADDRESS
-        #     self.write_ir(MACHXO2_CMD_INIT_ADDR_UFM, self.OPCODE_LEN)
-        #     self.runtest(1000,"us")
-
-        #     for line in jed_file.ufm_data:
-        #         # LSC_PROG_INCR_NV
-        #         self.write_ir(MACHXO2_CMD_PROG_INCR_NV,self.OPCODE_LEN)
-        #         self.write_dr(line,128)
-        #         self.runtest(10,"ms")
