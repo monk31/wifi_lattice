@@ -28,7 +28,7 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
   (caution if the message "esp32 is not in the network" 
    display, try again because sometimes request to kwow adress ip is long)
    
-  
+  https://github.com/monk31/wifi_lattice/issues/2#issue-589603974
 
 
 
