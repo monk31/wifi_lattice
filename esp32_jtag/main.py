@@ -22,8 +22,8 @@ from svf import *
 from ubinascii import *
 
 
-WIFI_SSID = "gdsic1"
-WIFI_PASS = "12345678"
+WIFI_SSID = "YOUR SSID"
+WIFI_PASS = "YOUR PASSWORD"
 
 
 BUFFER_SIZE    = 4096
