@@ -8,7 +8,33 @@
 
 programming language : micropython for his clean syntax
 
+CAUTION : if you are a fpga machx02 256 until 2000, you can use esp32 wroom-32 
+            else use esp32 wrover with spi ram
+            
 i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
+
+ 
+  ### esp32_jtag
+  
+  Pin (TCK)       →  GPIO  (pin 18 esp32)    
+  Pin (TDO)       →  GPIO  (pin 19 esp32)    
+  pin (TDI)       →  GPIO  (pin 23 esp32)         
+  pin (TMS)       →  GPIO  (pin 21 esp32) 
+  
+  in main.py, set your WIFI_SSID, WIFI_PAS
+  1. download the code with esp32tools
+  2. download wifi_prog.py and your file jed on your raspberry 
+  3. set command "python3 wifi_prog.py" and follow instructions
+  (caution if the message "esp32 is not in the network" 
+   display, try again because sometimes request to kwow adress ip is long)
+   
+  
+
+
+
+
+
+
 
   
   ### esp32_spi 
@@ -28,21 +54,12 @@ to know the adress ip local use a command
 
 in main.py, set your WIFI_SSID, WIFI_PASS and your deviceId (see const.py)
 
-after set the command netcat 192.168.4.x  241 < demo.jed 
-  
-  
-  
-  ### esp32_jtag
-  
-  Pin (TCK)       →  GPIO  (pin 18 esp32)    
-  Pin (TDO)       →  GPIO  (pin 19 esp32)    
-  pin (TDI)       →  GPIO  (pin 23 esp32)         
-  pin (TMS)       →  GPIO  (pin 21 esp32) 
-  
-  CAUTION : if you are a fpga machx02 256 until 2000, you can use esp32 wroom-32 
-            else use esp32 wrover with spi ram
+upload the code with esp32tools
 
+after on your raspberry,  set the command netcat 192.168.4.x  241 < demo.jed 
+  
 
+ 
   
   
   
