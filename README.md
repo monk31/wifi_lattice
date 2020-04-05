@@ -4,11 +4,11 @@
 ![microPython1](https://user-images.githubusercontent.com/13630510/68531538-922e6f00-0313-11ea-8417-db9fad768f5f.png)
 
 
-## this project allow the ESP32  to connect to my Wifi network and programming jed FPGA MACHX02
+## this project allow the ESP32  to connect to my Wifi network and programming,probing FPGA MACHX02
 
 programming language : micropython for his clean syntax
 
-CAUTION : if you are a fpga machx02 256 until 2000, you can use esp32 wroom-32 
+CAUTION : if you are a fpga machx02 1200 until 2000, you can use esp32 model wroom-32 
             else use esp32 wrover with spi ram
             
 i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
