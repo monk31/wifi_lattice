@@ -33,9 +33,10 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
    ![wifi_prog](https://user-images.githubusercontent.com/13630510/77827370-7803fa80-7115-11ea-8a05-791cb7dd1f30.png)
    
    ## probing (wifi_probe)
+   this tool allow to change the state of a pin for test
    
   in main.py (line 25 and 26), set your WIFI_SSID, WIFI_PASSWD
-  1. download the code in the esp32 flashh with esp32tools (folder esp32_jtag)
+  1. download the code in the esp32 flash with esp32tools (folder esp32_jtag)
   2. download wifi_prope.py and your file bsm on your raspberry (see example)
   3. set command "python3 wifi_probe.py" and follow instructions
    
