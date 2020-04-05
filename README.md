@@ -40,15 +40,8 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
   2. download wifi_prope.py and your file bsm on your raspberry (see example)
   3. set command "python3 wifi_probe.py" and follow instructions
    
+   ![wifi_probe](https://user-images.githubusercontent.com/13630510/78492832-46a8b180-7749-11ea-811b-571501010a23.png)
  
- 
-
-
-
-
-
-
-
   
   ### esp32_spi 
   
