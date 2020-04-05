@@ -72,7 +72,7 @@ MACHXO2_CMD_REFRESH             =	0x79    #
 MACHXO2_CMD_PROGRAM_SECURITY    =	0xCE    # Program the security bit to restrict access to flash
 MACHXO2_CMD_PROGRAM_SECPLUS     =	0xCF    # Program the security plus bit to restrict access to flash  
 MACHXO2_CMD_READ_UIDCODE        =   0x19    # Read 8 bytes of data representing a unique code per chip
-
+MACHXO2_CMD_EXTEST              =   0x15    # probing test
 
 # definition constant size fusetable
 
@@ -108,6 +108,7 @@ MACHXO2_JEDEC_ERROR = {0: "OK",
 STX = '\x02*'
 ETX = '\x03'
 EOF = "*"
+
 
 
 listdevice  = ["MACHX02_DEVICE_ID_1200","MACHX02_DEVICE_ID_2000","MACHX02_DEVICE_ID_4000","MACHX02_DEVICE_ID_7000"]

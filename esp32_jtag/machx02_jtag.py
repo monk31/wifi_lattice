@@ -2,7 +2,7 @@
 """
 Created on Mon Jun 10 15:20:37 2019
 
-@author: yann brengel <ybrengel@gmail.com>
+@author: yann brengel
 """
 import re
 import utime
@@ -310,11 +310,13 @@ class machx02_jtag(jtag):
 #        self.write_dr(16, jed_file.feature_bits)
 #        self.runtest(2)
 
-    def shift_bits(self,line):
+
+    # shift bits with bit number
+    def shift_bits(self,line,nb_bit):
         retval = ""        
         size_line = len(line)       
-        for countbit_128 in range(size_line):   
-            valbit = line[127-countbit_128]
+        for countbit in range(size_line):   
+            valbit = line[nb_bit-1-countbit]
             retval = retval + valbit
         return retval          
 
@@ -332,17 +334,27 @@ class machx02_jtag(jtag):
         numbit=0
         for line in fusetable:
             line_strip = line.strip()
-            size_line = len(line_strip)   
+            size_line = len(line_strip)           
             # LSC_PROG_INCR_NV            
-            line_shift = self.shift_bits(line_strip)
+            line_shift = self.shift_bits(line_strip,size_line)
             for countbit_128 in range(size_line):
                 valbit = line_strip[countbit_128]              
                 crc += int(valbit) << (numbit % 8)
                 numbit=numbit+1           
             data = int(line_shift, 2)           
             self.write_ir(MACHXO2_CMD_PROG_INCR_NV,self.OPCODE_LEN)                      
-            self.write_dr(data,128)
+            self.write_dr(data,size_line)
             self.runtest(1000,"us",2)
             self.check_busy_flag()            
         
         return crc
+
+
+    ######################################################
+    # send instruction extest to boundary scan register 
+    ######################################################
+    def send_extest(self,data):
+        self.write_ir(MACHXO2_CMD_EXTEST,self.OPCODE_LEN)
+        bits_reversed = self.shift_bits(data[0],len(data[0]))
+        data_extest   = int(bits_reversed,2)        
+        self.write_dr(data_extest,len(data[0]))

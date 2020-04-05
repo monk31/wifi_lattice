@@ -23,7 +23,7 @@ from ubinascii import *
 
 
 WIFI_SSID = "YOUR SSID"
-WIFI_PASS = "YOUR PASSWORD"
+WIFI_PASS = "YOUR PASSWD"
 
 
 BUFFER_SIZE    = 4096
@@ -72,7 +72,8 @@ def program(file_transfered,machx02,client_stream):
 #
 # main  to accept request from client
 def main(ip="192.168.4.16",server_port=241):
-    s = socket.socket()    
+    s = socket.socket()
+    boundaryscan_register = []  
     # Binding to all interfaces - server will be accessible to other hosts!
     addr = socket.getaddrinfo(ip,int(server_port))[0][-1]
     print("Bind address info:", addr)  
@@ -95,6 +96,7 @@ def main(ip="192.168.4.16",server_port=241):
         if not recv_client: break
         print("next_state",next_state)
         recv_client_str   = recv_client.decode("utf-8")
+        #print(recv_client_str)
         # select machx02 fpga
         if "MACHX02" in recv_client_str and next_state == "INIT":
             print("reception device id \n")                            
@@ -133,6 +135,26 @@ def main(ip="192.168.4.16",server_port=241):
                 next_state,crc  = program(file_transfered,machx02,client_stream)   
             else:
                 f.write(recv_client_str)
+
+         # probing jtag
+        elif "EXTEST" in recv_client_str and next_state == "PROGRAM":
+            message = "RECEIVING EXTEST ....\n"
+            print (message)
+            next_state = "EXTEST"           
+        elif  next_state == "EXTEST":
+            message = "MESSAGE EXTEST ....\n"
+            print (message)
+            if 'EOF\n' in recv_client_str :
+                recv_client_str = recv_client_str[:-4]  # remove EOF
+                boundaryscan_register.append(recv_client_str)                
+                machx02.send_extest(boundaryscan_register)
+                boundaryscan_register = []
+                message = "send EXTEST ....\n"
+                print (message)
+                client_stream.write(message)
+            else:
+                boundaryscan_register.append(recv_client_str)
+
         # check crc
         elif "VERIFY_CRC" in recv_client_str and next_state == "CRC":
             print (recv_client_str)                           

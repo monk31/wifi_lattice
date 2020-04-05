@@ -1,12 +1,4 @@
 # coding: utf-8
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Mars 10 15:20:37 2020
-
-@author: yann brengel <ybrengel@gmail.com>
-
-
-"""
 import subprocess
 import sys
 import re
@@ -164,6 +156,7 @@ def ack_server(socket):
 if __name__ == '__main__':
   list_step = []
   port = 241
+  EOF = 'EOF\n'
   res  = search_adress()
   if res == None:
     print("esp32 is not in network")
