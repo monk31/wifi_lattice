@@ -8,7 +8,7 @@
 
 programming language : micropython for his clean syntax
 
-CAUTION : if you are a fpga machx02 256 until 2000, you can use esp32 wroom-32 
+CAUTION : if you are a fpga machx02 1200 until 2000, you can use esp32 wroom-32 
             else use esp32 wrover with spi ram
             
 i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
