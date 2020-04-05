@@ -1,0 +1,486 @@
+-- ********************************************************************
+-- * LCMXO2_1200HC BSDL Model                                              *
+-- *   Application Specific BSDL File                                 *
+-- *                                                                  *
+-- * Created by Diamond Deployment Tool                                 *
+-- * File Date:      ven. 3. avr. 12:00:56 2020                                         *
+-- *                                                                  *
+-- * Application Specific BSDL file has been syntax checked with:     *
+-- * - Lattice BSDL Syntax Checker                                    *
+-- *                                                                  *
+-- ********************************************************************
+-- * File Date:          3/14/2016                                    *
+-- *                                                                  *
+-- * Standard Test Access Port and Boundary-Scan Architecture         *
+-- * VHDL Description File                                            *
+-- *                                                                  *
+-- * This BSDL file is created by genBSDL V2.1 according to:          *
+-- * - IEEE Standard 1149.1-2001                                      *
+-- *                                                                  *
+-- * Generated with:                                                  *
+-- * - PKT Rev:  1.41                                                 *
+-- * - BSR Rev:  1.3                                                 *
+-- * - OPCODE Rev:  1.6                                               *
+-- *                                                                  *
+-- * This BSDL has been validated for syntax and semantics            *
+-- * compliance to IEEE 1149.1 using:                                 *
+-- * - Lattice BSDL Syntax Checker                                    *
+-- * - Goepel BSDL Syntax Checker V3.1.2                              *
+-- * - ASSET/Agilent BSDL Validation Service                          *
+-- * - Intellitech BSDL Syntax Checker                                *
+-- *                                                                  *
+-- *  Copyright 2000 - 2016                                           *
+-- *  Lattice Semiconductor Corporation                               *
+-- *  5555 NE Moore Ct.                                               *
+-- *  Hillsboro, OR 97124                                             *
+-- *                                                                  *
+-- *  All rights reserved.  No part of this program or publication    *
+-- *  may be reproduced, transmitted, transcribed, stored in a        *
+-- *  retrieval system, or translated into any language or            *
+-- *  computer language, in any form or by any means without this     *
+-- *  notice appearing within.                                        *
+-- ********************************************************************
+-- *                                                                  *
+-- *                           IMPORTANT                              *
+-- *                                                                  *
+-- * The following is an application specific BSDL file created from: *
+-- *                                                                  *
+-- * C:/Users/ybren/Documents/wifi/esp32/micropython/esp32_jtag/work/demo_tinyfpga_pin21.jed *
+-- *                                                                  *
+-- * NOTE Diamond (64-bit) 3.10.0.111.2 JEDEC Compatible Fuse File.   *
+-- * NOTE Copyright (C), 1992-2010, Lattice Semiconductor Corporation.*
+-- * NOTE All Rights Reserved.                                        *
+-- * NOTE DATE CREATED:	Sun Nov 03 15:28:24 2019                      *
+-- * NOTE DESIGN NAME:	FipsyBaseline_Implementation.ncd               *
+-- * NOTE DEVICE NAME:	LCMXO2-1200HC-4QFN32                           *
+-- * NOTE JEDEC FILE STATUS:	Final   Version 1.94                     *
+-- * NOTE TRACEID 0x00                                                *
+-- * NOTE PIN ASSIGNMENTS                                             *
+-- * NOTE PINS PIN2 : 14 : out                                        *
+-- * NOTE PINS PIN5 : 20 : out                                        *
+-- * NOTE PINS PIN6 : 21 : out                                        *
+-- * NOTE PINS PIN7_done : 23 : out                                   *
+-- * NOTE PINS PIN8_pgmn : 25 : out                                   *
+-- * NOTE PINS PIN9_jtgnb : 26 : out                                  *
+-- * NOTE PINS PIN10_sda : 27 : out                                   *
+-- * NOTE PINS PIN11_scl : 28 : out                                   *
+-- * NOTE PINS PIN16 : 4 : out                                        *
+-- * NOTE PINS PIN17 : 5 : out                                        *
+-- * NOTE PINS PIN21 : 11 : out                                       *
+-- * NOTE PINS PIN22 : 12 : out                                       *
+-- * NOTE PINS SYSCONFIG_PIN_MCLK : 9 : inout                         *
+-- * NOTE PINS SYSCONFIG_PIN_SO : 10 : inout                          *
+-- * NOTE PINS SYSCONFIG_PIN_SN : 16 : in                             *
+-- * NOTE PINS SYSCONFIG_PIN_SI : 17 : inout                          *
+-- *                                                                  *
+-- * For Further assistance, please contact Tech Support at           *
+-- *       1-800-LATTICE or techsupport@latticesemi.com               *
+-- ********************************************************************
+-- *                                                                  *
+-- *                          REVISION HISTORY                        *
+-- *                                                                  *
+-- * Application Specific BSDL: ven. 3. avr. 12:00:56 2020                              *
+-- *  - Created application specific BSDL file.                       *
+-- * Rev 1.04:  3/14/2016                                             *
+-- *  - advanced version.                                          *
+-- *                                                                  *
+-- ********************************************************************
+entity LCMXO2_1200HC_QFN32 is 
+
+	generic (PHYSICAL_PIN_MAP : string := "qfn32");
+		port (
+      L_PIN16     :  out bit;
+      L_PIN17     :  out bit;
+      VCCIO3      :  linkage bit;
+      PB4C        :  inout bit;
+      L_SYSCONFIG_PIN_MCLK:  inout bit;
+      L_SYSCONFIG_PIN_SO:  inout bit;
+      L_PIN21     :  out bit;
+      L_PIN22     :  out bit;
+      PB11A       :  inout bit;
+      L_PIN2      :  out bit;
+      L_SYSCONFIG_PIN_SN:  in bit;
+      L_SYSCONFIG_PIN_SI:  inout bit;
+      VCCIO1      :  linkage bit;
+      L_PIN5      :  out bit;
+      L_PIN6      :  out bit;
+      L_PIN7_done :  out bit;
+      L_PIN8_pgmn :  out bit;
+      L_PIN9_jtgnb:  out bit;
+      L_PIN10_sda :  out bit;
+      L_PIN11_scl :  out bit;
+      TMS         :  in bit;
+      TCK         :  in bit;
+      TDI         :  in bit;
+      TDO         :  out bit;
+      GND         :  linkage bit_vector (1 to 2);
+      VCC         :  linkage bit_vector (1 to 2);
+      VCCIO0      :  linkage bit_vector (1 to 2);
+      VCCIO2      :  linkage bit_vector (1 to 2));
+      -- Version Control
+	use STD_1149_1_2001.all;	-- 1149.1-2001 attributes
+
+-- Component Conformance Statement
+	attribute COMPONENT_CONFORMANCE of LCMXO2_1200HC_QFN32 : entity is "STD_1149_1_2001";
+
+-- Device Package Pin Mapping
+	attribute PIN_MAP of LCMXO2_1200HC_QFN32 : entity is PHYSICAL_PIN_MAP;
+
+	constant qfn32 : PIN_MAP_STRING :=
+      "     L_PIN16:    4, " &
+      "     L_PIN17:    5, " &
+      "      VCCIO3:    6, " &
+      "        PB4C:    8, " & --SECFNC CSSPIN_MD4_TDOB
+      "L_SYSCONFIG_PIN_MCLK:    9, " &
+      "L_SYSCONFIG_PIN_SO:   10, " &
+      "     L_PIN21:   11, " &
+      "     L_PIN22:   12, " &
+      "       PB11A:   13, " & --SECFNC PCLKT2_1_INTEST_OVER
+      "      L_PIN2:   14, " &
+      "L_SYSCONFIG_PIN_SN:   16, " &
+      "L_SYSCONFIG_PIN_SI:   17, " &
+      "      VCCIO1:   19, " &
+      "      L_PIN5:   20, " &
+      "      L_PIN6:   21, " &
+      " L_PIN7_done:   23, " &
+      " L_PIN8_pgmn:   25, " &
+      "L_PIN9_jtgnb:   26, " &
+      " L_PIN10_sda:   27, " &
+      " L_PIN11_scl:   28, " &
+      "         TMS:   29, " & --SECFNC TMS
+      "         TCK:   30, " & --SECFNC TCK_TEST_CLK
+      "         TDI:   32, " & --SECFNC TDI_MD7
+      "         TDO:    1, " & --SECFNC TDO
+      "         GND: (   3, " &
+      "                22), " &
+      "         VCC: (  18, " &
+      "                 2), " &
+      "      VCCIO0: (  24, " &
+      "                31), " &
+      "      VCCIO2: (   7, " &
+      "                15)";
+-- End of pin mapping
+
+-- Grouped port mapping and definition
+--	attribute PORT_GROUPING of LCMXO2_1200HC_QFN32 : entity is
+--		"DIFFERENTIAL_CURRENT ( " &
+--		"(PB11A, PB11B)," &
+--		"(PB20C, PB20D)," &
+--		"(PB6C, PB6D)," &
+--		"(PB9A, PB9B)," &
+--		"(PL9A, PL9B)," &
+--		"(PR5C, PR5D)," &
+--		"(PT10C, TDI)," &
+--		"(PT11C, TMS)," &
+--		"(PT12C, PT12D)," &
+--		"(PT15C, PT15D)," &
+--		"(PT17C, PT17D)," &
+-- End of grouped port mapping
+
+-- TAP definition and characteristics
+	attribute TAP_SCAN_IN   of TDI : signal is true;
+	attribute TAP_SCAN_MODE of TMS : signal is true;
+	attribute TAP_SCAN_OUT  of TDO : signal is true;
+	attribute TAP_SCAN_CLOCK of TCK : signal is (25.0e6, BOTH);
+
+-- Instruction register description
+	attribute INSTRUCTION_LENGTH of LCMXO2_1200HC_QFN32 : entity is 8;
+	attribute INSTRUCTION_OPCODE of LCMXO2_1200HC_QFN32 : entity is
+		"              IDCODE		(11100000)," &
+		"          ISC_ENABLE		(11000110)," &
+		"    ISC_PROGRAM_DONE		(01011110)," &
+		" LSC_PROGRAM_SECPLUS		(11001111)," &
+		"ISC_PROGRAM_USERCODE		(11000010)," &
+		"ISC_PROGRAM_SECURITY		(11001110)," &
+		"         ISC_PROGRAM		(01100111)," &
+		"        LSC_ENABLE_X		(01110100)," &
+		"              BYPASS		(11111111)," &
+		"      ISC_DATA_SHIFT		(00001010)," &
+		"       ISC_DISCHARGE		(00010100)," &
+		"            USERCODE		(11000000)," &
+		"      ISC_ERASE_DONE		(00100100)," &
+		"               CLAMP		(01111000)," &
+		"   ISC_ADDRESS_SHIFT		(01000010)," &
+		"             PRELOAD		(00011100)," &
+		"            ISC_READ		(10000000)," &
+		"         ISC_DISABLE		(00100110)," &
+		"           ISC_ERASE		(00001110)," &
+		"            ISC_NOOP		(00110000)," &
+		"              SAMPLE		(00011100)," &
+		"               HIGHZ		(00011000)," &
+		"              EXTEST		(00010101)," &
+		"PRIVATE	(00000010, 00111010, 00110010, 10111010, " &
+			"11011100, 11110001, 00101100, 11010000, " &
+			"11110110, 11110100, 10010110, 10110010, " &
+			"01000110, 11011000, 10111000, 10011101, " &
+			"10100010, 11111010, 01110010, 10001111, " &
+			"01110000, 11110111, 00101110, 11010110, " &
+			"00111011, 00010110, 11110011, 10011100, " &
+			"11101000, 01101010, 00111110, 01111101, " &
+			"10010000, 11010001, 11010111, 00101101, " &
+			"11011101, 11001010, 00111000, 01100000, " &
+			"11110010, 11111000, 10000010, 00111001, " &
+			"00100010, 11011110, 00111100, 11010100, " &
+			"11110000, 10011111, 00010001, 11010101, " &
+			"01101001, 01110011, 11100111, 10100100, " &
+			"11011111, 00011001, 11011010, 00110011, " &
+			"11111001, 10110100, 10110000, 01111010, " &
+			"10110110, 11001011, 01111001, 11100100, " &
+			"00100000, 10111100, 11001001, 10011110, " &
+			"11111011, 11010011, 01000111)";
+
+  attribute INSTRUCTION_CAPTURE of LCMXO2_1200HC_QFN32 : entity is 
+                                  "XXXXXX01";
+  attribute INSTRUCTION_PRIVATE of LCMXO2_1200HC_QFN32 : entity is 
+                                  "PRIVATE";
+
+--IDCODE and USERCODE register definition
+	attribute IDCODE_REGISTER of LCMXO2_1200HC_QFN32 : entity is
+		"0000" &	--Version number
+		"0001001010111010" &	--Device specific number
+		"000001000011";	--Company code
+
+	attribute USERCODE_REGISTER of LCMXO2_1200HC_QFN32 : entity is
+		"11111111111111111111111111111111";
+
+	attribute REGISTER_ACCESS of LCMXO2_1200HC_QFN32 : entity is
+		"ISC_ADDRESS[333]		(ISC_ADDRESS_SHIFT), " &
+		"ISC_SECTOR[8]		(ISC_ERASE), " &
+		"ISC_DEFAULT[1]		(ISC_DISABLE, " &
+		"			 ISC_NOOP, " &
+		"			 ISC_DISCHARGE, " &
+		"			 ISC_PROGRAM_DONE, " &
+		"			 ISC_ERASE_DONE, " &
+		"			 ISC_PROGRAM_SECURITY, " &
+		"			 LSC_PROGRAM_SECPLUS), " &
+		"BYPASS		(CLAMP, " &
+		"			 HIGHZ, " &
+		"			 BYPASS), " &
+		"ISC_DATA[1080]		(ISC_DATA_SHIFT), " &
+		"ISC_CONFIG[8]		(ISC_ENABLE, " &
+		"			 LSC_ENABLE_X), " &
+		"ISC_PDATA[1080]		(ISC_PROGRAM, " &
+		"			 ISC_READ), " &
+		"BOUNDARY		(EXTEST, " &
+		"			 PRELOAD, " &
+		"			 SAMPLE), " &
+		"DEVICE_ID		(IDCODE, " &
+		"			 USERCODE, " &
+		"			 ISC_PROGRAM_USERCODE)"; 
+
+-- *****************************************************************
+-- Boundary Scan Register Description, Cell 0 is the closest to TDO 
+-- *****************************************************************
+	attribute BOUNDARY_LENGTH of LCMXO2_1200HC_QFN32 : entity is 208;
+	attribute BOUNDARY_REGISTER of LCMXO2_1200HC_QFN32 : entity is
+
+      "207 (BC_1, *, internal, X), " &
+      "206 (BC_1, *, internal, 1), " &
+      "205 (BC_1, *, internal, X), " &
+      "204 (BC_1, *, internal, 1), " &
+      "203 (BC_1, *, internal, X), " &
+      "202 (BC_1, *, internal, 1), " &
+      "201 (BC_1, *, internal, X), " &
+      "200 (BC_1, *, internal, 1), " &
+      "199 (BC_1, *, internal, X), " &
+      "198 (BC_1, *, internal, 1), " &
+      "197 (BC_1, *, internal, X), " &
+      "196 (BC_1, *, internal, 1), " &
+      "195 (BC_1, *, internal, X), " &
+      "194 (BC_1, *, internal, 1), " &
+      "193 (BC_1, *, internal, X), " &
+      "192 (BC_1, *, internal, 1), " &
+      "191 (BC_1, *, internal, X), " &
+      "190 (BC_1, *, internal, 1), " &
+      "189 (BC_1, *, internal, X), " &
+      "188 (BC_1, *, internal, 1), " &
+      "187 (BC_1, L_PIN11_scl, OUTPUT3, X, 186, 1, Z),"&
+      "186 (BC_2, *, control, 1), " &
+      "185 (BC_1, L_PIN10_sda, OUTPUT3, X, 184, 1, Z),"&
+      "184 (BC_2, *, control, 1), " &
+      "183 (BC_1, *, internal, X), " &
+      "182 (BC_1, *, internal, 1), " &
+      "181 (BC_1, *, internal, X), " &
+      "180 (BC_1, *, internal, 1), " &
+      "179 (BC_1, L_PIN9_jtgnb, OUTPUT3, X, 178, 1, Z),"&
+      "178 (BC_2, *, control, 1), " &
+      "177 (BC_1, L_PIN8_pgmn, OUTPUT3, X, 176, 1, Z),"&
+      "176 (BC_2, *, control, 1), " &
+      "175 (BC_1, *, internal, X), " &
+      "174 (BC_1, *, internal, 1), " &
+      "173 (BC_1, *, internal, X), " &
+      "172 (BC_1, *, internal, 1), " &
+      "171 (BC_1, *, internal, X), " &
+      "170 (BC_1, *, internal, 1), " &
+      "169 (BC_1, *, internal, X), " &
+      "168 (BC_1, *, internal, 1), " &
+      "167 (BC_1, *, internal, X), " &
+      "166 (BC_1, *, internal, 1), " &
+      "165 (BC_1, *, internal, X), " &
+      "164 (BC_1, *, internal, 1), " &
+      "163 (BC_1, *, internal, X), " &
+      "162 (BC_1, *, internal, 1), " &
+      "161 (BC_1, L_PIN7_done, OUTPUT3, X, 160, 1, Z),"&
+      "160 (BC_2, *, control, 1), " &
+      "159 (BC_1, *, internal, X), " &
+      "158 (BC_1, *, internal, 1), " &
+      "157 (BC_1, *, internal, X), " &
+      "156 (BC_1, *, internal, 1), " &
+      "155 (BC_1, *, internal, X), " &
+      "154 (BC_1, *, internal, 1), " &
+      "153 (BC_1, *, internal, X), " &
+      "152 (BC_1, *, internal, 1), " &
+      "151 (BC_1, *, internal, X), " &
+      "150 (BC_1, *, internal, 1), " &
+      "149 (BC_1, *, internal, X), " &
+      "148 (BC_1, *, internal, 1), " &
+      "147 (BC_1, *, internal, X), " &
+      "146 (BC_1, *, internal, 1), " &
+      "145 (BC_1, *, internal, X), " &
+      "144 (BC_1, *, internal, 1), " &
+      "143 (BC_1, *, internal, X), " &
+      "142 (BC_1, *, internal, 1), " &
+      "141 (BC_1, *, internal, X), " &
+      "140 (BC_1, *, internal, 1), " &
+      "139 (BC_1, *, internal, X), " &
+      "138 (BC_1, *, internal, 1), " &
+      "137 (BC_1, *, internal, X), " &
+      "136 (BC_1, *, internal, 1), " &
+      "135 (BC_1, L_PIN6, OUTPUT3, X, 134, 1, Z),"&
+      "134 (BC_2, *, control, 1), " &
+      "133 (BC_1, L_PIN5, OUTPUT3, X, 132, 1, Z),"&
+      "132 (BC_2, *, control, 1), " &
+      "131 (BC_1, *, internal, X), " &
+      "130 (BC_1, *, internal, 1), " &
+      "129 (BC_1, *, internal, X), " &
+      "128 (BC_1, *, internal, 1), " &
+      "127 (BC_1, *, internal, X), " &
+      "126 (BC_1, *, internal, 1), " &
+      "125 (BC_1, *, internal, X), " &
+      "124 (BC_1, *, internal, 1), " &
+      "123 (BC_1, *, internal, X), " &
+      "122 (BC_1, *, internal, 1), " &
+      "121 (BC_1, *, internal, X), " &
+      "120 (BC_1, *, internal, 1), " &
+      "119 (BC_1, *, internal, X), " &
+      "118 (BC_1, *, internal, 1), " &
+      "117 (BC_1, *, internal, X), " &
+      "116 (BC_1, *, internal, 1), " &
+      "115 (BC_1, *, internal, X), " &
+      "114 (BC_1, *, internal, 1), " &
+      "113 (BC_1, *, internal, X), " &
+      "112 (BC_1, *, internal, 1), " &
+      "111 (BC_1, *, internal, X), " &
+      "110 (BC_1, *, internal, 1), " &
+      "109 (BC_1, *, internal, X), " &
+      "108 (BC_1, *, internal, 1), " &
+      "107 (BC_7, L_SYSCONFIG_PIN_SI, BIDIR, X, 106, 1, Z),"&
+      "106 (BC_2, *, control, 1), " &
+      "105 (BC_2, L_SYSCONFIG_PIN_SN, INPUT, X),"&
+      "104 (BC_1,    *, INTERNAL, 1),"&
+      "103 (BC_1, *, internal, X), " &
+      "102 (BC_1, *, internal, 1), " &
+      "101 (BC_1, *, internal, X), " &
+      "100 (BC_1, *, internal, 1), " &
+      "99 (BC_1, *, internal, X), " &
+      "98 (BC_1, *, internal, 1), " &
+      "97 (BC_1, *, internal, X), " &
+      "96 (BC_1, *, internal, 1), " &
+      "95 (BC_1, *, internal, X), " &
+      "94 (BC_1, *, internal, 1), " &
+      "93 (BC_1, *, internal, X), " &
+      "92 (BC_1, *, internal, 1), " &
+      "91 (BC_1, *, internal, X), " &
+      "90 (BC_1, *, internal, 1), " &
+      "89 (BC_1, *, internal, X), " &
+      "88 (BC_1, *, internal, 1), " &
+      "87 (BC_1, *, internal, X), " &
+      "86 (BC_1, *, internal, 1), " &
+      "85 (BC_1, *, internal, X), " &
+      "84 (BC_1, *, internal, 1), " &
+      "83 (BC_1, L_PIN2, OUTPUT3, X, 82, 1, Z),"&
+      "82 (BC_2, *, control, 1), " &
+      "81 (BC_7, PB11A, bidir, X, 80, 1, Z), " &
+      "80 (BC_2, *, control, 1), " &
+      "79 (BC_1, *, internal, X), " &
+      "78 (BC_1, *, internal, 1), " &
+      "77 (BC_1, *, internal, X), " &
+      "76 (BC_1, *, internal, 1), " &
+      "75 (BC_1, L_PIN22, OUTPUT3, X, 74, 1, Z),"&
+      "74 (BC_2, *, control, 1), " &
+      "73 (BC_1, L_PIN21, OUTPUT3, X, 72, 1, Z),"&
+      "72 (BC_2, *, control, 1), " &
+      "71 (BC_1, *, internal, X), " &
+      "70 (BC_1, *, internal, 1), " &
+      "69 (BC_1, *, internal, X), " &
+      "68 (BC_1, *, internal, 1), " &
+      "67 (BC_7, L_SYSCONFIG_PIN_SO, BIDIR, X, 66, 1, Z),"&
+      "66 (BC_2, *, control, 1), " &
+      "65 (BC_7, L_SYSCONFIG_PIN_MCLK, BIDIR, X, 64, 1, Z),"&
+      "64 (BC_2, *, control, 1), " &
+      "63 (BC_1, *, internal, X), " &
+      "62 (BC_1, *, internal, 1), " &
+      "61 (BC_1, *, internal, X), " &
+      "60 (BC_1, *, internal, 1), " &
+      "59 (BC_1, *, internal, X), " &
+      "58 (BC_1, *, internal, 1), " &
+      "57 (BC_7, PB4C, bidir, X, 56, 1, Z), " &
+      "56 (BC_2, *, control, 1), " &
+      "55 (BC_1, *, internal, X), " &
+      "54 (BC_1, *, internal, 1), " &
+      "53 (BC_1, *, internal, X), " &
+      "52 (BC_1, *, internal, 1), " &
+      "51 (BC_1, *, internal, X), " &
+      "50 (BC_1, *, internal, 1), " &
+      "49 (BC_1, *, internal, X), " &
+      "48 (BC_1, *, internal, 1), " &
+      "47 (BC_1, *, internal, X), " &
+      "46 (BC_1, *, internal, 1), " &
+      "45 (BC_1, *, internal, X), " &
+      "44 (BC_1, *, internal, 1), " &
+      "43 (BC_1, L_PIN17, OUTPUT3, X, 42, 1, Z),"&
+      "42 (BC_2, *, control, 1), " &
+      "41 (BC_1, L_PIN16, OUTPUT3, X, 40, 1, Z),"&
+      "40 (BC_2, *, control, 1), " &
+      "39 (BC_1, *, internal, X), " &
+      "38 (BC_1, *, internal, 1), " &
+      "37 (BC_1, *, internal, X), " &
+      "36 (BC_1, *, internal, 1), " &
+      "35 (BC_1, *, internal, X), " &
+      "34 (BC_1, *, internal, 1), " &
+      "33 (BC_1, *, internal, X), " &
+      "32 (BC_1, *, internal, 1), " &
+      "31 (BC_1, *, internal, X), " &
+      "30 (BC_1, *, internal, 1), " &
+      "29 (BC_1, *, internal, X), " &
+      "28 (BC_1, *, internal, 1), " &
+      "27 (BC_1, *, internal, X), " &
+      "26 (BC_1, *, internal, 1), " &
+      "25 (BC_1, *, internal, X), " &
+      "24 (BC_1, *, internal, 1), " &
+      "23 (BC_1, *, internal, X), " &
+      "22 (BC_1, *, internal, 1), " &
+      "21 (BC_1, *, internal, X), " &
+      "20 (BC_1, *, internal, 1), " &
+      "19 (BC_1, *, internal, X), " &
+      "18 (BC_1, *, internal, 1), " &
+      "17 (BC_1, *, internal, X), " &
+      "16 (BC_1, *, internal, 1), " &
+      "15 (BC_1, *, internal, X), " &
+      "14 (BC_1, *, internal, 1), " &
+      "13 (BC_1, *, internal, X), " &
+      "12 (BC_1, *, internal, 1), " &
+      "11 (BC_1, *, internal, X), " &
+      "10 (BC_1, *, internal, 1), " &
+      "9 (BC_1, *, internal, X), " &
+      "8 (BC_1, *, internal, 1), " &
+      "7 (BC_1, *, internal, X), " &
+      "6 (BC_1, *, internal, 1), " &
+      "5 (BC_1, *, internal, X), " &
+      "4 (BC_1, *, internal, 1), " &
+      "3 (BC_1, *, internal, X), " &
+      "2 (BC_1, *, internal, 1), " &
+      "1 (BC_1, *, internal, X), " &
+      "0 (BC_1, *, internal, 1)";
+
+end LCMXO2_1200HC_QFN32;
