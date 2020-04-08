@@ -28,7 +28,7 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
   2. download wifi_prog.py and your file jed on your raspberry 
   3. set command "python3 wifi_prog.py" and follow instructions
   (caution if the message "esp32 is not in the network" 
-   display, try again because sometimes request to kwow adress ip is longer)
+   display, try again because sometimes request network response is longer)
    
    ![wifi_prog](https://user-images.githubusercontent.com/13630510/77827370-7803fa80-7115-11ea-8a05-791cb7dd1f30.png)
    
