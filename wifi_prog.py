@@ -5,9 +5,13 @@ import re
 import time
 from  socket import *
 import os,fnmatch
-from const import *
+
 
 BUFFER_SIZE = 4096
+STX = '\x02*'
+ETX = '\x03'
+EOF = "*"
+listdevice  = ["MACHX02_DEVICE_ID_1200","MACHX02_DEVICE_ID_2000","MACHX02_DEVICE_ID_4000","MACHX02_DEVICE_ID_7000"]
 
 # to extract checksum jed file
 def extract_checksum(file):

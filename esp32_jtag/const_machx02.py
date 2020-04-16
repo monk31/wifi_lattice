@@ -1,5 +1,5 @@
 
-from micropyhon import const
+from micropython import const
 # attribute INSTRUCTION_OPCODE of LCMXO2_1200HC_XXMG132 : entity is
 		# "              IDCODE		(11100000)," &
 		# "          ISC_ENABLE		(11000110)," &
