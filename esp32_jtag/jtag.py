@@ -57,7 +57,8 @@ class jtag(object):
    ##--------------------------------------------------------------------# 
    #  write_dr 
    #---------------------------------------------------------------------# 
-   #This routine loads the supplied <data> of <num_bits> length into the JTAG 
+   #This routine loads the supplied <data> of <num_bits> length into the JTAG
+   @micropython.viper 
    def write_dr(self,instruction,num_bits):
       #print("write dr")
       retval = 0x0                          # run test idle
@@ -93,7 +94,8 @@ class jtag(object):
    #This routine loads the supplied <instruction> of <num_bits> length into the JTAG 
    ## Instruction Register on the target system.  Leaves in the Run_Test/Idle state. 
    ## The return value is the n-bit value read from the IR. 
-   ## Assumes the JTAG state machine starts in the Run_Test/Idle state. 
+   ## Assumes the JTAG state machine starts in the Run_Test/Idle state.
+   @micropython.viper 
    def write_ir (self,instruction,num_bits):
       #print("write ir")
       retval = 0x0                         # run test idle
@@ -128,7 +130,8 @@ class jtag(object):
    #check_dr #------------------------------------------------------------------------
    # This routine shifts <num_bits> of <data> into the Data Register, and returns
    # up to 32-bits of data read from the Data Register. # Leaves in the Run_Test/Idle state. 
-   # Assumes the JTAG state machine starts in the Run_Test/Idle state. 
+   # Assumes the JTAG state machine starts in the Run_Test/Idle state
+    @micropython.viper
    def check_dr (self,dat,num_bits):
       #print("check dr")
       retval = 0x0
