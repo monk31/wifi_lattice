@@ -5,7 +5,7 @@ Created on Sat May 18 15:02:57 2019
 @author: ybren
 """
 import os
-from const import *
+from const_machx02 import *
 import ubinascii
 import ustruct
 

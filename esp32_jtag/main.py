@@ -17,7 +17,7 @@ import network
 import uselect as select
 
 
-from const import *
+from const_machx02 import *
 from svf import *
 from ubinascii import *
 

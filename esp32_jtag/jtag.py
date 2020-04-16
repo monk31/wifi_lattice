@@ -4,7 +4,7 @@ Created on Sun Aug 11 09:55:11 2019
 
 @author: yann brengel
 """
-from const import *
+from const_machx02 import *
 from machine import Pin,SPI
 import utime
 

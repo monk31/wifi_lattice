@@ -6,7 +6,7 @@ Created on Mon Jun 10 15:20:37 2019
 """
 import re
 import utime
-from const import *
+from const_machx02 import *
 from jtag import jtag
 
 #   class to manage MACHX02 jtag
