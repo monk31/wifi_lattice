@@ -1,5 +1,8 @@
 ## deploying firmware
 
+see https://github.com/micropython/micropython/blob/master/docs/esp32/tutorial/intro.rst for details
+
+
 windows :
 esptool.py -p COMX erase_flash
 esptool.py --chip esp32 --port COMX --baud 115200 write_flash -z 0x1000 esp32-20190125-v1.10.bin
