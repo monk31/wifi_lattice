@@ -26,8 +26,8 @@ def extract_checksum(file):
     return fusechecksum
 
 
-# search esp32 adress ip in network
-def search_adress():
+# scan network to detect esp32
+def scan_network():
     adress = None
     batcmd = "nmap -sP 192.168.4.*"
     result = subprocess.check_output(batcmd, shell=True)
@@ -161,7 +161,7 @@ if __name__ == '__main__':
   list_step = []
   port = 241
   EOF = 'EOF\n'
-  res  = search_adress()
+  res  = scan_network()
   if res == None:
     print("esp32 is not in network")
     sys.exit()
