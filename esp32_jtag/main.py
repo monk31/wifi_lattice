@@ -149,9 +149,10 @@ def main(ip="192.168.4.16",server_port=241):
                 boundaryscan_register.append(recv_client_str)                
                 machx02.send_extest(boundaryscan_register)
                 boundaryscan_register = []
-                message = "send EXTEST ....\n"
+                message = "ACK send EXTEST ....\n"
                 print (message)
                 client_stream.write(message)
+                next_state = "INIT"
             else:
                 boundaryscan_register.append(recv_client_str)
 

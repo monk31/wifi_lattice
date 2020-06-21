@@ -191,9 +191,11 @@ if __name__ == '__main__':
           print("send device",device.encode())
           if ack_server(socket):             
              next_state = "SELECT_FILE"
-             list_step.append(next_state)           
+             list_step.append(next_state)
+             fail_select_device = False          
           else:
              print(" MACHX02 device is different on the board  ")
+             fail_select_device = True
           display_menu(list_step)
           select_ok = True
         else:
@@ -271,12 +273,12 @@ if __name__ == '__main__':
     elif code == "6":
       print(" good bye")
       break
-    elif code == "1" and next_state != "DEVICE":
-      print(" selected a device before ")
+    elif code == "1" and next_state != "DEVICE" and fail_select_device:      
+      print(" selected a device before ",fail_select_device)
     elif code == "2" and next_state != "SELECT_FILE":
-      print(" selected a device before ")
+      print(" selected a file before ")
     elif code == "3" and next_state != "PROGRAM":
-      print(" selected deive and file before ")
+      print(" selected devicee and file before ")
     elif int(code) > 6:
       print("bad selected ...")
     # bad selected  

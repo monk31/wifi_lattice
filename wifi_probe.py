@@ -20,7 +20,7 @@ listdevice  = ["MACHX02_DEVICE_ID_1200","MACHX02_DEVICE_ID_2000","MACHX02_DEVICE
 
 
 # search esp32 adress ip in network
-def search_adress():
+def scan_network():
     adress = None
     batcmd = "nmap -sP 192.168.4.*"
     result = subprocess.check_output(batcmd, shell=True)
@@ -101,7 +101,11 @@ def display_menu(list_step):
       print("2: select your file   --> OK")
   else:
       print("2: select_your file")  
-  print("3: extest")
+  if "SEND_EXTEST" in list_step:
+      print("3: send extest        --> OK")
+  else:
+    print("3: send extest ")
+ # print("3: extest")
   print("4: init prog")
   print("5: exit program")
 
@@ -120,7 +124,7 @@ if __name__ == '__main__':
   list_step = []
   port = 241
   EOF = 'EOF\n'
-  res  = search_adress()
+  res  = scan_network()
   if res == None:
     print("esp32 is not in network")
     sys.exit()
@@ -150,9 +154,11 @@ if __name__ == '__main__':
           print("send device",device.encode())
           if ack_server(socket):             
              next_state = "SELECT_FILE"
-             list_step.append(next_state)           
+             list_step.append(next_state)
+             fail_select_device = False          
           else:
              print(" MACHX02 device is different on the board  ")
+             fail_select_device = True
           display_menu(list_step)
           select_ok = True
         else:
@@ -203,8 +209,11 @@ if __name__ == '__main__':
         socket.send(next_state.encode())
         socket.sendall(data.encode())
         code_encode = EOF.encode()   
-        socket.send(code_encode)                   
-        ack_server(socket)
+        socket.send(code_encode)                                 
+        if ack_server(socket):         
+          next_state = "SEND_EXTEST"
+          list_step.append(next_state)
+        display_menu(list_step)
     # init prog
     elif code == "4":
       message = "INIT"
@@ -218,7 +227,7 @@ if __name__ == '__main__':
     elif code == "5":
       print(" good bye")
       break
-    elif code == "1" and next_state != "DEVICE":
+    elif code == "1" and next_state != "DEVICE" and fail_select_device:
       print(" selected a device before ")
     elif code == "2" and next_state != "SELECT_FILE":
       print(" selected a device before ")
