@@ -60,7 +60,7 @@ to know the adress ip local use a command
 
 - nmap -sP 192.168.4.*
 
-in main.py, set your WIFI_SSID, WIFI_PASS and your deviceId (see const.py)
+in main.py, set your WIFI_SSID, WIFI_PASS and your deviceId line 206 (see const.py)
 
 upload the code with esp32tools
 
