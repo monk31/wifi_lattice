@@ -67,6 +67,7 @@ upload the code with esp32tools
 after on your raspberry,  set the command netcat 192.168.4.x  241 < demo.jed 
 
 benchmark : MACHX02 7000 => programming = 50 s
+lattice diamond : programming ftdi = 40 s
   
 
  
