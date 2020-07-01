@@ -65,6 +65,8 @@ in main.py, set your WIFI_SSID, WIFI_PASS and your deviceId (see const.py)
 upload the code with esp32tools
 
 after on your raspberry,  set the command netcat 192.168.4.x  241 < demo.jed 
+
+benchmark : MACHX02 7000 => programming = 50 s
   
 
  
