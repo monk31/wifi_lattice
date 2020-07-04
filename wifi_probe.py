@@ -25,13 +25,13 @@ def scan_network():
     batcmd = "nmap -sP 192.168.4.*"
     result = subprocess.check_output(batcmd, shell=True)
     result_str = result.decode("utf-8")
-    dns_report = re.findall('\nNmap scan report for\s\w+\s\(\d\d\d.\d\d\d.\d.\d+\)', result_str)
-    if len(dns_report) == 1:
-      matchObj = re.search( r'espressif', dns_report[0], re.M|re.I)
-      if matchObj:
-        adress = re.findall('\d\d\d.\d\d\d.\d.\d+',dns_report[0])
-      else:
-        adress = None    
+    dns_report = re.findall('\nNmap scan report for\s\w+\s\(\d\d\d.\d\d\d.\d.\d+\)', result_str)    
+    if len(dns_report) >= 1:
+      for dns in dns_report:
+        matchObj = re.search( r'espressif', dns, re.M|re.I)
+        if matchObj:
+          adress = re.findall('\d\d\d.\d\d\d.\d.\d+',dns)
+          break       
     return adress
 
 
