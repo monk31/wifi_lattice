@@ -310,15 +310,7 @@ class machx02_jtag(jtag):
 #        self.write_dr(16, jed_file.feature_bits)
 #        self.runtest(2)
 
-
-    # shift bits with bit number
-    def shift_bits(self,line,nb_bit):
-        retval = ""        
-        size_line = len(line)       
-        for countbit in range(size_line):   
-            valbit = line[nb_bit-1-countbit]
-            retval = retval + valbit
-        return retval          
+          
 
     #####################################
     # programm jedec file
@@ -336,12 +328,12 @@ class machx02_jtag(jtag):
             line_strip = line.strip()
             size_line = len(line_strip)           
             # LSC_PROG_INCR_NV            
-            line_shift = self.shift_bits(line_strip,size_line)
+            line_reverse = ''.join(reversed(line_strip))
             for countbit_128 in range(size_line):
                 valbit = line_strip[countbit_128]              
                 crc += int(valbit) << (numbit % 8)
                 numbit=numbit+1           
-            data = int(line_shift, 2)           
+            data = int(line_reverse, 2)           
             self.write_ir(MACHXO2_CMD_PROG_INCR_NV,self.OPCODE_LEN)                      
             self.write_dr(data,size_line)
             self.runtest(1000,"us",2)
