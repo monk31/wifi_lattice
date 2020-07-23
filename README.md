@@ -30,7 +30,7 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
   (caution if the message "esp32 is not in the network" 
    display, try again because sometimes request network response is longer)
    
-   benchmark : MACHX02-4000 => programming = 1,38 mn
+   benchmark : MACHX02-4000 => programming = 1 mn 38 s
    
    ![wifi_prog](https://user-images.githubusercontent.com/13630510/77827370-7803fa80-7115-11ea-8a05-791cb7dd1f30.png)
    
