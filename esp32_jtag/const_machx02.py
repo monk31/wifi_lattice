@@ -47,7 +47,7 @@ JTAG_BSC_LENGTH_7000 = const(664)
 MACHXO2_CMD_READ_DEVICEID       =   const(0xE0)    # Data is 4 byte device id code
 MACHXO2_CMD_ENABLE_TRANSPARENT  =	const(0x74)    # Enable flash programming in transparent mode
 MACHXO2_CMD_ENABLE_OFFLINE      =	const(0xC6)    # Enable flash programming in offline mode
-MACHXO2_CMD_CHECK_BUSY          =	const(0xF0)   # Busy bit
+MACHXO2_CMD_CHECK_BUSY          =	const(0xF0)    # Busy bit
 MACHXO2_CMD_READ_STATUS         =	const(0x3C)    # 4 data bytes, bit12=busy, bit13=error
 MACHXO2_CMD_ERASE               =	const(0x0E)    # Erase the part  use 0x0F
 MACHXO2_CMD_ERASE_UFM          	=   const(0xCB)    # Erase user flash memory (UFM) section only

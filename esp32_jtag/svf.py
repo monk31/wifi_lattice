@@ -5,7 +5,8 @@ Created on Sat May 18 15:02:57 2019
 @author: yann brengel <ybrengel@gmail.com>
 """
 from machx02_jtag import machx02_jtag
-
+import gc
+import micropython
 
 # ! Lattice Semiconductor Corp.
 # ! Serial Vector Format (.SVF) File.
@@ -14,7 +15,8 @@ class svf(machx02_jtag):
     def __init__(self,fusetable):       
         machx02_jtag.__init__(self)
         self.fusetable = fusetable
-            
+
+    @micropython.native        
     def erase_program_verify(self):
         error = False
         # ! Check the IDCODE
@@ -42,8 +44,11 @@ class svf(machx02_jtag):
         self.check_status()    
      
         # ! Program CFG
-        print("program jed") 
-        crc = self.program_machx02(self.fusetable) 
+        print("program jed")       
+        # print('Func definition: {} allocated: {}'.format(gc.mem_free(), gc.mem_alloc()))       
+        crc = self.program_machx02(self.fusetable)
+        # print('Func run free: {} allocated: {}'.format(gc.mem_free(), gc.mem_alloc()))
+        # gc.collect()
         #print("crc =",crc)
         # ! Read the status bit
         self.check_status()

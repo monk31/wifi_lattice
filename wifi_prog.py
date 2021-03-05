@@ -1,3 +1,5 @@
+# YB  19/02/2021 : add compression data to transfert
+
 # coding: utf-8
 import subprocess
 import sys
@@ -44,17 +46,19 @@ def scan_network():
 # transfert  file socket
 def transfert_file(socket,file_jed):
     EOF = 'EOF\n'
-    with open(file_jed, "rb") as f:
-        while (True):
+    num_row = 0
+    with open(file_jed, "rb") as f:    
+        while (True):        
           # read the bytes from the file
           bytes_read = f.read(BUFFER_SIZE)
           if not bytes_read:             
               code_encode = EOF.encode()   
               socket.send(code_encode)
                 # file transmitting is done
-              break                   
+              break                            
           socket.sendall(bytes_read)
     f.close()
+
 
 
 # to check file jed compatible
@@ -103,7 +107,10 @@ def build_program_jed(file_jed):
             elif "NOTE END CONFIG DATA" in line_strip:
                 record_line =False
             elif record_line:
-                fusetable.write(line)
+                list_int = list(int(line_strip[i : i + 8], 2) for i in range(0, len(line_strip), 8))
+                list_hex = ["%02X" % x  for x in list_int]
+                line_convert = ''.join(list_hex)
+                fusetable.write(line_convert + '\n')
 
 # to check crc
 def check_crc(mess,file_prog):    

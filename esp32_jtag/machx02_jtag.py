@@ -8,6 +8,8 @@ import re
 import utime
 from const_machx02 import *
 from jtag import jtag
+import gc
+import micropython
 
 #   class to manage MACHX02 jtag
 class machx02_jtag(jtag):
@@ -60,7 +62,7 @@ class machx02_jtag(jtag):
         return self.device
      # asessor
     def get_fusetable(self,fusetable):
-        return self.fusetable
+       return self.fusetable
 
 
 	# check the Key Protection fuses
@@ -310,27 +312,40 @@ class machx02_jtag(jtag):
 #        self.write_dr(16, jed_file.feature_bits)
 #        self.runtest(2)
 
-          
+    # to fill string      
+    def zfl(self,s, width):
+        # Pads the provided string with leading 0's to suit the specified 'chrs' length
+        # Force # characters, fill with leading 0's
+        return '{:0>{w}}'.format(s, w=width)
 
     #####################################
     # programm jedec file
     #####################################
+    @micropython.native
     def program_machx02(self,fusetable):                    
         ### program config flash
         # LSC_INIT_ADDRESS
         self.write_ir(MACHXO2_CMD_INIT_ADDRESS,self.OPCODE_LEN)
         self.write_dr(8, 0x04)
-        self.runtest(1000,"us",2)
-         
+        self.runtest(1000,"us",2)        
         crc = 0
-        numbit=0
-        for line in fusetable:
+        numbit=0        
+        gc.collect() # ligne importante pour reallocation de la RAM
+       # micropython.mem_info()
+        for line in fusetable.readlines():
             line_strip = line.strip()
-            size_line = len(line_strip)           
+            # convert hex to binary string                               
+            hex_as_int = int(line_strip, 16)
+            hex_as_binary = bin(hex_as_int)            
+           # print("hex as bin",hex_as_binary)
+          #  line_bin = hex_as_binary[2:].zfill(128)  # ne marche pas en micropython a cause de zfill           
+            page_prog = self.zfl(hex_as_binary[2:],128)                        
+            size_line = len(page_prog)
+           # print("page_prog   ",page_prog)         
             # LSC_PROG_INCR_NV            
-            line_reverse = ''.join(reversed(line_strip))
+            line_reverse = ''.join(reversed(page_prog))
             for countbit_128 in range(size_line):
-                valbit = line_strip[countbit_128]              
+                valbit = page_prog[countbit_128]              
                 crc += int(valbit) << (numbit % 8)
                 numbit=numbit+1           
             data = int(line_reverse, 2)           
@@ -338,7 +353,8 @@ class machx02_jtag(jtag):
             self.write_dr(data,size_line)
             self.runtest(1000,"us",2)
             self.check_busy_flag()            
-        
+            gc.collect()                         # ligne importante pour reallocation de la RAM
+          #  micropython.mem_info()
         return crc
 
 

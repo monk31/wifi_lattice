@@ -20,7 +20,7 @@ import uselect as select
 from const_machx02 import *
 from svf import *
 from ubinascii import *
-
+import micropython
 
 WIFI_SSID = "YOUR SSID"
 WIFI_PASS = "YOUR PASSWD"
@@ -40,11 +40,12 @@ def config_wifi():
     return ip 
 
 # program machx02
+@micropython.native
 def program(file_transfered,machx02,client_stream):
     next_state = "PROGRAM"        
-    f         = open(file_transfered)
-    fusetable = f.readlines()
-    listfile = os.listdir()
+    fusetable  = open(file_transfered)    
+   # fusetable = f.readlines()
+    listfile = os.listdir()    
     if not file_transfered in listfile:
         message = "programm jed not found, programming is KO \n"
         print (message)
@@ -65,12 +66,13 @@ def program(file_transfered,machx02,client_stream):
             message = "NAK programming Failed \n"
             print (message)
             client_stream.write(message) 
-        f.close()
+        fusetable.close()
     return next_state,crc
 
 
 #
 # main  to accept request from client
+# @micropython.native
 def main(ip="192.168.4.16",server_port=241):
     s = socket.socket()
     boundaryscan_register = []  
@@ -173,7 +175,7 @@ def main(ip="192.168.4.16",server_port=241):
 #
 # MAIN   
 if __name__ == '__main__':
-   
+    micropython.alloc_emergency_exception_buf(100)
     ad_ip = config_wifi()
     print("adress ip",ad_ip)
     server_port = 241

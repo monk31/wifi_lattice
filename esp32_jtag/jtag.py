@@ -5,7 +5,7 @@ Created on Sun Aug 11 09:55:11 2019
 @author: yann brengel
 """
 from const_machx02 import *
-from machine import Pin,SPI
+from machine import Pin,SoftSPI
 import utime
 
 
@@ -24,8 +24,8 @@ class jtag(object):
 
    # setting bitbang mode
    def spi_jtag_on(self,frequency):
-      self.hwspi=SPI(-1 , baudrate=frequency, polarity=1, phase=1, bits=8, firstbit=SPI.MSB, sck=self.tck, mosi=self.tdi, miso=self.tdo)
-      self.swspi=SPI(-1 , baudrate=frequency, polarity=1, phase=1, bits=8, firstbit=SPI.MSB, sck=self.tck, mosi=self.tdi, miso=self.tdo)
+      self.hwspi=SoftSPI(baudrate=frequency, polarity=1, phase=1, bits=8, firstbit=SoftSPI.MSB, sck=self.tck, mosi=self.tdi, miso=self.tdo)
+      self.swspi=SoftSPI(baudrate=frequency, polarity=1, phase=1, bits=8, firstbit=SoftSPI.MSB, sck=self.tck, mosi=self.tdi, miso=self.tdo)
 
    ##----------------------------------------------------------------------------------# 
    #pulse_tck 
