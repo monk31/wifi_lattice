@@ -8,10 +8,12 @@
 
 programming language : micropython for his clean syntax
 
-CAUTION : if you are a fpga machx02 1200 until 2000, you can use esp32 model wroom-32 
-            else use esp32 wrover with spi ram
+CAUTION : tested with ESP32 model WROVER and machx02 4000
+firmware micropython version = esp32spiram-20220117-v1.18.bin
+            
             
 i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
+congfiguration use raspap.com to set a wifi hotspot access
 
  
   ### esp32_jtag
@@ -23,7 +25,7 @@ i use a raspberry pi 3 to create a local network with a static adress (192.168.4
   
   ## programming (wifi_prog)
   
-  in main.py (line 25 and 26), set your WIFI_SSID, WIFI_PASSWD
+  in main.py (line 25 and 26), set your WIFI_SSID, WIFI_PASSWD , default is set raspap.com 
   1. download the code in the esp32 flash with esp32tools (folder esp32_jtag)
   2. download wifi_prog.py and your file jed on your raspberry 
   3. set command "python3 wifi_prog.py" and follow instructions
