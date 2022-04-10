@@ -29,7 +29,7 @@ def extract_checksum(file):
 
 
 # scan network to detect esp32
-def scan_network():
+def scan_network(hostname):
     adress = None
     batcmd = "nmap -sP 192.168.4.*"
     result = subprocess.check_output(batcmd, shell=True)
@@ -37,7 +37,7 @@ def scan_network():
     dns_report = re.findall('\nNmap scan report for\s\w+\s\(\d\d\d.\d\d\d.\d.\d+\)', result_str)    
     if len(dns_report) >= 1:
       for dns in dns_report:
-        matchObj = re.search( r'espressif', dns, re.M|re.I)
+        matchObj = re.search(hostname, dns, re.M|re.I)
         if matchObj:
           adress = re.findall('\d\d\d.\d\d\d.\d.\d+',dns)
           break       
@@ -168,7 +168,8 @@ if __name__ == '__main__':
   list_step = []
   port = 241
   EOF = 'EOF\n'
-  res  = scan_network()
+  hostname = "amixngs"
+  res  = scan_network(hostname)
   if res == None:
     print("esp32 is not in network")
     sys.exit()

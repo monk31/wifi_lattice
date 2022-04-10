@@ -22,8 +22,8 @@ from svf import *
 from ubinascii import *
 import micropython
 
-WIFI_SSID = "YOUR SSID"
-WIFI_PASS = "YOUR PASSWD"
+WIFI_SSID = "raspi-webgui"
+WIFI_PASS = "ChangeMe"
 
 
 BUFFER_SIZE    = 4096
@@ -31,12 +31,16 @@ BUFFER_SIZE    = 4096
 
 # wifi configuration
 def config_wifi():
-    sta = network.WLAN(network.STA_IF)  # creation client d’acces WiFi
-    sta.active(True)  # activation du client d’acces WiFi   
-    sta.connect(WIFI_SSID, WIFI_PASS)  # connexion au point d’acces WiFi
-    while(sta.isconnected() == False):
-        time.sleep(1)
-    ip = sta.ifconfig()[0]  # on recupere l’adresse IP
+    wlan = network.WLAN(network.STA_IF)  # creation client d’acces WiFi
+    if not wlan.isconnected():
+        wlan.active(True)  # activation du client d’acces WiFi       
+        wlan.config(dhcp_hostname='amixngs')       
+        wlan.connect(WIFI_SSID, WIFI_PASS)  # connexion au point d’acces WiFi
+        while not wlan.isconnected():
+            pass                     
+    ip = wlan.ifconfig()[0]  # on recupere l’adresse IP
+    host = wlan.config('dhcp_hostname')
+    print('Wifi connected as {}/{}, net={}, gw={}, dns={}'.format(host, *wlan.ifconfig()))
     return ip 
 
 # program machx02
