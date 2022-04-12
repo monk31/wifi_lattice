@@ -21,12 +21,25 @@ class machx02_spi(object):
   status={"busy":4096,"failed":8192,"enabled":512,"done":256}
   mask  = 0x00000000FFFFFFFF
 
-  def __init__(self,baudrate,deviceid):  
+  def __init__(self,baudrate):  
     self.cs = Pin(15, Pin.OUT)
     self.cs.on()
     self.hspi = SPI(1,baudrate=400000,sck=Pin(14), mosi=Pin(13), miso=Pin(12))
-    self.deviceid = deviceid
+    self.deviceid = None
     
+	
+	
+  # asessor
+  def get_device(self,device):        
+      if device == "MACHX02_DEVICE_ID_1200":
+          self.deviceid = MACHXO2_DEVICE_ID_1200
+      elif device == "MACHX02_DEVICE_ID_2000":
+          self.deviceid = MACHXO2_DEVICE_ID_2000
+      elif device == "MACHX02_DEVICE_ID_4000":
+          self.deviceid = MACHXO2_DEVICE_ID_4000
+      elif device == "MACHX02_DEVICE_ID_7000":
+          self.deviceid = MACHXO2_DEVICE_ID_7000
+      return self.deviceid	
                    
   # transfert spi
   def spiTrans(self,cmd,size):    
@@ -42,8 +55,8 @@ class machx02_spi(object):
     cmd = bytearray([MACHXO2_CMD_READ_DEVICEID, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
     resp_machx02_spi = self.spiTrans(cmd,8)
     resp_machx02_spi_int = self.from_bytes_big(bytes(resp_machx02_spi))   
-    result = resp_machx02_spi_int & self.mask
-    return (self.deviceid == result)
+    result = resp_machx02_spi_int & self.mask   
+    return result
 
   # disable
   def disable(self):
@@ -145,6 +158,13 @@ class machx02_spi(object):
     feabits = self.spiTrans(cmd,6) 
     return self.from_bytes_big(feature_row),self.from_bytes_big(feabits)
  
+ 
+ # to fill string      
+  def zfl(self,s, width):
+        # Pads the provided string with leading 0's to suit the specified 'chrs' length
+        # Force # characters, fill with leading 0's
+    return '{:0>{w}}'.format(s, w=width)
+ 
   # programm jedec file
   def program(self,fusetable):
   # erase flash
@@ -161,7 +181,7 @@ class machx02_spi(object):
     cmd = bytearray([MACHXO2_CMD_INIT_ADDRESS, 0x00, 0x00, 0x00])
     resp_machx02_spi = self.spiTrans(cmd,4)
     #print("set adress to 0")
-    self.waitidle()
+    self.waitidle()		
 
   # program pages    
     sizefile = len(fusetable)
@@ -181,18 +201,28 @@ class machx02_spi(object):
     for line in fusetable:
         #before = gc.mem_free()
         line_strip = line.strip()
-        size_line = len(line_strip)        
+        #print(line_strip,type(line_strip))
+        line_bytes = bytearray(line_strip)
+        size_line = len(line_strip)
+        hex_as_int = int(line_strip, 16)                      
+        hex_as_binary = bin(hex_as_int)        
+        page_prog = self.zfl(hex_as_binary[2:],128)
+        line_bytes = [page_prog[i:i+8] for i in range(0,128,8)]       
         # print("count",countline,size_line)
         countline = countline + 1
-        for countbit_128 in range(size_line):
-            valbit = line_strip[countbit_128]
-            if valbit == "1":           
-               val = 1
-            else:
-               val = 0
-            crc += val << (numbit % 8)
-            numbit=numbit+1        
-        line_bytes = [line_strip[i:i+8] for i in range(0,size_line,8)]
+        for countbit_128 in range(128):
+            valbit = page_prog[countbit_128]
+            crc += int(valbit) << (numbit % 8)
+            numbit=numbit+1           
+        # for countbit_128 in range(size_line):
+            # valbit = line_strip[countbit_128]
+            # if valbit == "1":           
+               # val = 1
+            # else:
+               # val = 0
+            # crc += val << (numbit % 8)
+            # numbit=numbit+1        
+        # line_bytes = [line_strip[i:i+8] for i in range(0,size_line,8)]
                 
       # transmit data with format  : cmd,0,0,1 <16* 8 bytes data>              
         req[0]=MACHXO2_CMD_PROG_INCR_NV
@@ -201,7 +231,7 @@ class machx02_spi(object):
         req[3]=0x01
         # transmit Y*16 bytes        
         for i in range(nbdata):
-           req[4+i]=self.str_to_byte(line_bytes[i])      
+           req[4+i]=self.str_to_byte(line_bytes[i])          
         resp_machx02_spi = self.spiTrans(req,nbdata+4)
         #after = gc.mem_free()
         #print("mem =",before - after ,"bytes")

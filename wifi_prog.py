@@ -85,7 +85,7 @@ def check_program_jed(file_jed,device):
 
 
 # to generate only cfg_data
-def build_program_jed(file_jed):
+def build_program_jed(file_jed,device):
     ETX = '\x03'    
     f = open(file_jed,"r")
     record_line = False
@@ -93,14 +93,16 @@ def build_program_jed(file_jed):
     fusetable = open(file_cfg,"w")
     while True:
         line  = f.readline()
-        line_strip = line.strip()
+        line_strip = line.strip()        
         if len(line_strip) != 0:
             if ETX in line:
-                #print("only transfert cfg data for ",file_jed)
+               # print("only transfert cfg data for ",file_jed)
                 fusetable.close()
                 f.close()
                 break
             elif line_strip == "L000000":
+                record_line =True
+            elif (line_strip == "L0000000" and device == listdevice[3]): #MACHX02_DEVICE_ID_7000
                 record_line =True
             elif line_strip == "*":
                 record_line = False        
@@ -110,6 +112,7 @@ def build_program_jed(file_jed):
                 list_int = list(int(line_strip[i : i + 8], 2) for i in range(0, len(line_strip), 8))
                 list_hex = ["%02X" % x  for x in list_int]
                 line_convert = ''.join(list_hex)
+                #print("line",line_convert)
                 fusetable.write(line_convert + '\n')
 
 # to check crc
@@ -229,7 +232,7 @@ if __name__ == '__main__':
               prog_file = listfile[int(select_file)]
               print("file selected =",prog_file)
               if check_program_jed(prog_file,device):
-                build_program_jed(prog_file)
+                build_program_jed(prog_file,device)
                 next_state = "PROGRAM"
                 list_step.append(next_state)
                 display_menu(list_step)

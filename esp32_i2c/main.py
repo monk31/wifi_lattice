@@ -16,7 +16,7 @@ except:
 import network
 
 from const import *
-from machine import Pin, SPI
+from machine import Pin, I2c
 from machx02_i2c import *
 from ubinascii import *
 
