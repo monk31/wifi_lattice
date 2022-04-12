@@ -12,8 +12,8 @@ CAUTION : tested with ESP32 model WROVER and machx02 4000
 firmware micropython version = esp32spiram-20220117-v1.18.bin
             
             
-i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
-congfiguration use raspap.com to set a wifi hotspot access
+i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1).
+I use software raspap.com to set a wifi hotspot access
 
   
   ## programming (wifi_prog)
