@@ -15,13 +15,6 @@ firmware micropython version = esp32spiram-20220117-v1.18.bin
 i use a raspberry pi 3 to create a local network with a static adress (192.168.4.1)
 congfiguration use raspap.com to set a wifi hotspot access
 
- 
-  ### esp32_jtag
-  
-  Pin (TCK)       →  GPIO  (pin 18 esp32)    
-  Pin (TDO)       →  GPIO  (pin 19 esp32)    
-  pin (TDI)       →  GPIO  (pin 23 esp32)         
-  pin (TMS)       →  GPIO  (pin 21 esp32) 
   
   ## programming (wifi_prog)
   
@@ -36,18 +29,16 @@ congfiguration use raspap.com to set a wifi hotspot access
    
    ![wifi_prog](https://user-images.githubusercontent.com/13630510/77827370-7803fa80-7115-11ea-8a05-791cb7dd1f30.png)
    
-   ## probing (wifi_probe)
-   this tool allow to change the state of a pin for test
-   
-  in main.py (line 25 and 26), set your WIFI_SSID, WIFI_PASSWD
-  1. download the code in the esp32 flash with esp32tools (folder esp32_jtag)
-  2. download wifi_probe.py and your file bsm on your raspberry (see example)
-  3. set command "python3 wifi_probe.py" and follow instructions
-   
-   ![wifi_probe](https://user-images.githubusercontent.com/13630510/78492832-46a8b180-7749-11ea-811b-571501010a23.png)
  
   
-  ### esp32_spi 
+  ### bus esp32_jtag
+  
+  Pin (TCK)       →  GPIO  (pin 18 esp32)    
+  Pin (TDO)       →  GPIO  (pin 19 esp32)    
+  pin (TDI)       →  GPIO  (pin 23 esp32)         
+  pin (TMS)       →  GPIO  (pin 21 esp32) 
+  
+  ### bus esp32_spi 
   
   the spi machx02 must be configure in slave device with sysconfig register. check the jed file if pins are configured as slave
   
@@ -62,11 +53,19 @@ congfiguration use raspap.com to set a wifi hotspot access
 benchmark : MACHX02 7000 => programming = 50 s
 lattice diamond : programming ftdi = 40 s
 
- ### esp32_i2c is under construct 
+ ### bus esp32_i2c is under construct 
   
   
 
- 
+  ## probing (wifi_probe)
+   this tool allow to change the state of a pin for test
+   
+  in main.py (line 25 and 26), set your WIFI_SSID, WIFI_PASSWD
+  1. download the code in the esp32 flash with esp32tools (folder esp32_jtag)
+  2. download wifi_probe.py and your file bsm on your raspberry (see example)
+  3. set command "python3 wifi_probe.py" and follow instructions
+   
+   ![wifi_probe](https://user-images.githubusercontent.com/13630510/78492832-46a8b180-7749-11ea-811b-571501010a23.png)
   
   
   
