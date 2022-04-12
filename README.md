@@ -49,24 +49,15 @@ congfiguration use raspap.com to set a wifi hotspot access
   
   ### esp32_spi 
   
-  the spi machx02 must be configure in slave device with sysconfig register
+  the spi machx02 must be configure in slave device with sysconfig register. check the jed file if pins are configured as slave
   
   Pin CCLK)       →  GPIO  (pin 14 esp32)    
   Pin (SPISO)     →  GPIO  (pin 12 esp32)    
   pin (SN)        →  GPIO  (pin 15 esp32)         
   pin (SISPI)     →  GPIO  (pin 13 esp32) 
-  
-  usage 
+ 
+  use wifi_prog.py to communicate with the server 
 
-to know the adress ip local use a command
-
-- nmap -sP 192.168.4.*
-
-in main.py, set your WIFI_SSID, WIFI_PASS and your deviceId line 206 (see const.py)
-
-upload the code with esp32tools
-
-after on your raspberry,  set the command netcat 192.168.4.x  241 < demo.jed 
 
 benchmark : MACHX02 7000 => programming = 50 s
 lattice diamond : programming ftdi = 40 s
