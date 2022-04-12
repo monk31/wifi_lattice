@@ -25,7 +25,7 @@ congfiguration use raspap.com to set a wifi hotspot access
   (caution if the message "esp32 is not in the network" 
    display, try again because sometimes request network response is longer)
    
-   benchmark : MACHX02-4000 => programming = 1 mn 38 s
+   
    
    ![wifi_prog](https://user-images.githubusercontent.com/13630510/77827370-7803fa80-7115-11ea-8a05-791cb7dd1f30.png)
    
@@ -38,6 +38,8 @@ congfiguration use raspap.com to set a wifi hotspot access
   pin (TDI)       →  GPIO  (pin 23 esp32)         
   pin (TMS)       →  GPIO  (pin 21 esp32) 
   
+  benchmark : MACHX02-4000 => programming = 1 mn 38 s
+  
   ### bus esp32_spi 
   
   the spi machx02 must be configure in slave device with sysconfig register. check the jed file if pins are configured as slave
@@ -46,9 +48,6 @@ congfiguration use raspap.com to set a wifi hotspot access
   Pin (SPISO)     →  GPIO  (pin 12 esp32)    
   pin (SN)        →  GPIO  (pin 15 esp32)         
   pin (SISPI)     →  GPIO  (pin 13 esp32) 
- 
-  use wifi_prog.py to communicate with the server 
-
 
 benchmark : MACHX02 7000 => programming = 50 s
 lattice diamond : programming ftdi = 40 s
